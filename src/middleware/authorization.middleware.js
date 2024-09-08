@@ -1,11 +1,12 @@
 
 const { CustomError } = require("../utils/errors/error");
-const { getUserByAuthId } = require("../utils/sqlQueries");
 
 exports.validateTokenMiddleware = async (req, res, next) => {
   
   try {
-  
+    console.log(
+      "validating middleware - token .."
+    )
     next();
   } catch (error) {
     console.log(error);
