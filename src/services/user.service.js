@@ -68,7 +68,7 @@ exports.login = async (req) => {
     if (!user || !(await user.comparePassword(password))) {
       throw new CustomError("Invalid credentials")
     }
-    const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ email ,userId:user._id}, SECRET_KEY, { expiresIn: '1h' });
     return {
       message: "user loggedin successfully",
       token
