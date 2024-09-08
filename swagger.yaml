@@ -1,0 +1,462 @@
+#http://localhost:8080/api-docs/
+
+openapi: 3.0.0
+docExpansion: '`none`'
+info:
+  title: PWIP-ANALYTICS-BE
+  description: API for all routes related to EXIM DATA
+  version: 1.0.0
+  contact:
+    email: tech@pwip.co
+    url: "http://pwip.co"
+servers:
+  - url: http://localhost:8090/api
+  - url: http://localhost:8090/admin/api
+  - url: https://api-analytics-stage.pwip.co/api
+  - url: https://api-analytics-stage.pwip.co/admin/api
+  - url: https://api-analytics.pwip.co/api
+  - url: https://api-analytics.pwip.co/admin/api
+
+    # description:       Optional server description, e.g. Internal staging server for testing
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      securityDefinitions:
+paths:
+ #PAYMENT
+  /service/rice-price/exim-trend:
+    get:
+      tags:
+        - USER-EXIM-ROUTES
+      summary: Get all exim Trend 
+      parameters:
+        - in: query
+          name: ToDate
+          type: string
+          required: false
+          description: upto date for filteration 
+          example: 20-1-2024
+        - in: query
+          name: rangeInMonths
+          type: string
+          required: false
+          description: number of months of data required .
+          example: 6
+        - in: query
+          name: force
+          type: string
+          required: false
+          description: optional - Force update - (skip redis data and analysis from scrach then update redis) value [true,false] .
+          example: true
+      security: 
+         - BearerAuth: []  
+      responses:
+        '200':    # status code
+          description: A JSON array of content
+          content:
+            application/json:
+              schema: 
+                type: array
+                example: 
+                    [
+                        {
+                            "_id": "65def73c769f43aeb45469c3",
+                            "_variantId": "65d4a307f1cc96c377a480d1",
+                            "userId": 10003,
+                            "saved": true,
+                            "createdAt": "2024-02-28T09:05:00.830Z",
+                            "updatedAt": "2024-02-28T09:08:29.577Z",
+                            "__v": 0,
+                        }
+                    ]
+                  
+        '400':
+          description: bad request    
+  
+  /service/rice-price/exim-table:
+    get:
+      tags:
+        - USER-EXIM-ROUTES
+      summary: Get Data for  exim table 
+      parameters:
+        - in: query
+          name: hsn_code
+          type: string
+          required: true
+          description: hsn_code for filter product. 
+          example: 10063010
+        - in: query
+          name: valueType
+          type: string
+          required: false
+          description: expected values will be ["ALL","FOB","VOLUME"] 
+          example: FOB
+        - in: query
+          name: portType
+          type: string
+          required: false
+          description: Only need when valueType !== "ALL". expected values will be ["POL","POD"] 
+          example: POD
+        - in: query
+          name: year 
+          type: string
+          required: false
+          description: Only need when valueType == "ALL". expected values will be [2023,2022,...] Default-[2023]
+          example: 2023         
+        - in: query
+          name: month 
+          type: string
+          required: false
+          description: Only need when month == "january". expected values will be ["january","february",...]
+          example: january         
+        - in: query
+          name: page
+          type: string
+          required: false
+          description: page number 
+          example: 1
+        - in: query
+          name: limit
+          type: string
+          required: false
+          description: number of data needed in a page
+          example: 10
+        - in: query
+          name: force
+          type: string
+          required: false
+          description: >
+            optional - Force update - (skip redis data and analysis from scrach then update redis) value [true,false] .
+            example: true 
+
+
+        # ONLY FOR VALUETYPE = ALL
+        - in: query
+          name: foreignCountry
+          type: string
+          required: false
+          description: >
+            optional Only when **valueType=all** values inputs [usa,nepal...] (case-insensitive)
+          example: nepal
+        - in: query
+          name: foreignPortName
+          type: string
+          required: false
+          description: optional Only when **valueType=all**  (case-insensitive)
+          example: nepal
+        - in: query
+          name: indianPort
+          type: string
+          required: false
+          description: optional Only when **valueType=all**  (case-insensitive)
+          example: BHITHAMORE
+        - in: query
+          name: exporter
+          type: string
+          required: false
+          description: optional Only when **valueType=all**  (case-insensitive)
+          example: BAJRANG BALI TRADERS
+        - in: query
+          name: IEC
+          type: string
+          required: false
+          description: optional Only when **valueType=all**  (case-insensitive)
+          example: 
+        - in: mode
+          name: exporter
+          type: string
+          required: false
+          description: optional Only when **valueType=all**  (case-insensitive) value to input ( sea
+              , air
+              , road
+              , icd)
+          enum:
+              - sea
+              - air
+              - road
+              - icd
+          example: road
+         
+       
+         
+
+         
+    
+      security: 
+         - BearerAuth: []  
+      responses:
+        '200':    # status code
+          description: A JSON array of content
+          content:
+            application/json:
+              schema: 
+                type: array
+                example: 
+                    [
+                        {
+                            "_id": "65def73c769f43aeb45469c3",
+                            "_variantId": "65d4a307f1cc96c377a480d1",
+                            "userId": 10003,
+                            "saved": true,
+                            "createdAt": "2024-02-28T09:05:00.830Z",
+                            "updatedAt": "2024-02-28T09:08:29.577Z",
+                            "__v": 0,
+                        }
+                    ]
+                  
+        '400':
+          description: bad request    
+  
+  /service/rice-price/exim-table/filter-values:
+    get:
+      tags:
+        - USER-EXIM-ROUTES
+      summary: Get Filter values for  exim table [ valueType = all]
+      parameters:
+        - in: query
+          name: hsn_code
+          type: string
+          required: true
+          description: hsn_code for filter product. 
+          example: 10063010
+        - in: query
+          name: year 
+          type: string
+          required: false
+          description: Only need when valueType == "ALL". expected values will be [2023,2022,...] Default-[2023]
+          example: 2023         
+        - in: query
+          name: month 
+          type: string
+          required: false
+          description: Only need when month == "january". expected values will be ["january","february",...]
+          example: january         
+
+      security: 
+         - BearerAuth: []  
+      responses:
+        '200':    # status code
+          description: A JSON array of content
+          content:
+            application/json:
+              schema: 
+                type: array
+                example: 
+                    [
+                        {
+                            "_id": "65def73c769f43aeb45469c3",
+                            "_variantId": "65d4a307f1cc96c377a480d1",
+                            "userId": 10003,
+                            "saved": true,
+                            "createdAt": "2024-02-28T09:05:00.830Z",
+                            "updatedAt": "2024-02-28T09:08:29.577Z",
+                            "__v": 0,
+                        }
+                    ]
+                  
+        '400':
+          description: bad request    
+  
+  /service/rice-price/exim-analysis:
+    get:
+      tags:
+        - USER-EXIM-ROUTES
+      summary: Get Data for  exim table 
+      parameters:
+        - in: query
+          name: hsn_code
+          type: string
+          required: true
+          description: hsn_code for filter product. 
+          example: 10063010
+        - in: query
+          name: force
+          type: string
+          required: false
+          description: optional - Force update - (skip redis data and analysis from scrach then update redis) value [true,false] .
+          example: true    
+        - in: query
+          name: lifetime
+          type: string
+          required: false
+          description: _ [default] optional - only check specific month data. 
+          example: true
+        - in: query
+          name: month
+          type: string
+          required: false
+          description: optional - only check specific month data. 
+          example: jan
+        - in: query
+          name: year
+          type: string
+          required: false
+          description: optional - only check specific month data. 
+          example: 2023
+         
+    
+      security: 
+         - BearerAuth: []  
+      responses:
+        '200':    # status code
+          description: A JSON array of content
+          content:
+            application/json:
+              schema: 
+                type: array
+                example: 
+                   {
+                      "MostExportedDestinationName": {
+                          "destinationName": "Cotonou",
+                          "value": 326595.35,
+                      },
+                      "MostExportedOriginPortName": {
+                          "OriginPortName": "Kakinada",
+                          "value": 779146.96,
+                      },
+                      "MostExportedExporter": {
+                          "exporterName": "SATYAM BALAJEE RICE INDUSTRIES PRIVATE LIMITED",
+                          "value": 177290,
+                      },
+                      "MostExportedYear": {
+                          "year": "2024",
+                          "value": 1755013.72926,
+                      },
+                      "lifetimeTotalVol": 2806132.4735899945,
+                      "lifetimeTotalExportPriceValue": 159258754474.50397,
+                      "inflationPercentage": 57.99345622174325,
+                      "demandPercentage": 41.01167507479579,
+                    }
+                  
+        '400':
+          description: bad request    
+  
+  /service/rice-price/exim-data:
+    get:
+      deprecated: true
+      tags:
+        - ADMIN-EXIM-ROUTES
+      summary: .[ADMIN] [EXIM-DATA] get full eximData collection
+      parameters:
+            - in: query
+              name: page
+              type: string
+              required: false
+              description: upto date for filteration 
+              example: 1
+            - in: query
+              name: limit
+              type: string
+              required: false
+              description: number of months of data required .
+              example: 10
+            
+                    
+      security: 
+         - BearerAuth: []  
+      responses:
+        '200':    # status code
+          description: A JSON array of content
+          content:
+            application/json:
+              schema: 
+                type: object
+                example:  {}
+        '400':
+          description: bad request    
+   
+  /service/rice-price/exim-trend-update-redis:
+    get:
+      tags:
+        - ADMIN-EXIM-ROUTES
+      summary: Update exim Trend to Redis. [this is force update - key in redis will be dynamic with ToDate and rangeFrom in query.]
+      parameters:
+        - in: query
+          name: ToDate
+          type: string
+          required: false
+          description: upto date for filteration 
+          example: 20-1-2024
+        - in: query
+          name: rangeInMonths
+          type: string
+          required: false
+          description: number of months of data required .
+          example: 6
+         
+    
+      security: 
+         - BearerAuth: []  
+      responses:
+        '200':    # status code
+          description: A JSON array of content
+          content:
+            application/json:
+              schema: 
+                type: array
+                example: 
+                    [
+                        {
+                            "_id": "65def73c769f43aeb45469c3",
+                            "_variantId": "65d4a307f1cc96c377a480d1",
+                            "userId": 10003,
+                            "saved": true,
+                            "createdAt": "2024-02-28T09:05:00.830Z",
+                            "updatedAt": "2024-02-28T09:08:29.577Z",
+                            "__v": 0,
+                        }
+                    ]
+                  
+        '400':
+          description: bad request    
+ 
+  /service/rice-price/exim-data/bulk-write:
+    post:
+      tags:
+        - SCRIPT-ADMIN-ROUTES
+      summary: .[ADMIN] [EXIM-DATA-UPLOAD] Add exim date to DB by excel sheet .
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      
+                    
+      security: 
+         - BearerAuth: []  
+      responses:
+        '200':    # status code
+          description: A JSON array of content
+          content:
+            application/json:
+              schema: 
+                type: object
+                example:  {}
+        '400':
+          description: bad request    
+ 
+  /service/rice-price/exim-data/sample-sheet:
+    get:
+      tags:
+        - SCRIPT-ADMIN-ROUTES
+      summary: .[ADMIN] [EXIM-DATA] get sample excel sheet for upload . ** upload data should be first sheet  [mandatory]
+
+                    
+      security: 
+         - BearerAuth: []  
+      responses:
+        '200':    # status code
+          description: A JSON array of content
+          content:
+            application/json:
+              schema: 
+                type: object
+                example:  {}
+        '400':
+          description: bad request    
+ 
+ 
