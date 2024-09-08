@@ -1,12 +1,11 @@
+const userService = require("../services/user.service");
 
 exports.register = async (req, res, next) => {
   try {
     // const productsResponse = await productService.createProduct(req.body);
-    const productsResponse = {
-      message: "register",
-      authentication: "passed",
-    };
-    res.status(200).json(productsResponse);
+   const  response =  await userService.register(req)
+   
+   res.status(200).json(response);
   } catch (err) {
     next(err);
   }
@@ -15,11 +14,9 @@ exports.register = async (req, res, next) => {
 exports.login = async (req, res, next) => {
   try {
     // const productsResponse = await productService.createProduct(req.body);
-    const productsResponse = {
-      message: "login",
-      authentication: "passed",
-    };
-    res.status(200).json(productsResponse);
+    const  response =  await userService.login(req)
+
+    res.status(200).json(response);
   } catch (err) {
     next(err);
   }

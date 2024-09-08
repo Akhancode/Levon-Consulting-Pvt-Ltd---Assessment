@@ -111,6 +111,7 @@ exports.deleteProductById = async (_productId) => {
     if (error instanceof NotFoundError || error instanceof ValidationError) {
         throw error; 
       } else {
+        throw new DatabaseError("Error creating user.");
         throw new DatabaseError("Error updating  product.");
       }
   }
