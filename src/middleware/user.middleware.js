@@ -1,5 +1,5 @@
 
-const CustomError = require("../utils/customError");
+const { CustomError } = require("../utils/errors/error");
 const { getUserByAuthId } = require("../utils/sqlQueries");
 
 exports.validateTokenMiddleware = async (req, res, next) => {

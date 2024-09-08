@@ -3,7 +3,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const express = require("express");
-const publicRoutes = require("./src/routes/public/index.js");
+const publicRoutes = require("./src/routes/index.js");
 // import swagger ui
 const swaggerui = require("swagger-ui-express");
 const YAML = require("yamljs");

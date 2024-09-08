@@ -22,4 +22,11 @@ class NotFoundError extends Error {
   }
 }
 
-module.exports = { DatabaseError, NotFoundError, ValidationError };
+class CustomError extends Error {
+    constructor(message, code, success = false) {
+      super(message);
+      this.success = success;
+      this.code = code;
+    }
+  }
+module.exports = { DatabaseError, NotFoundError, ValidationError ,CustomError };

@@ -1,5 +1,4 @@
-const CustomError = require("../utils/customError");
-
+const { CustomError } = require("../utils/errors/error");
 exports.monitor_api = (req, res, next) => {
   try {
     const TIMEOUT_DURATION = 5000; //10s
