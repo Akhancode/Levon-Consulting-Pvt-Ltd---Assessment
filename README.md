@@ -50,3 +50,50 @@ Brief description of your project, including its purpose and main features.
        - https://api.postman.com/collections/30275964-357aa4eb-6581-4d3d-81f7-b9542adb21e1?access_key=PMAT-01J7BBPY185VRGB0RW8BVRVGGF
 
 
+
+## Architecture/design explanation
+### Directories are : 
+**Model**: Defines the structure of your data and interacts with the database. It represents the data layer of your application.
+
+**Controller**: Handles incoming requests, processes them, and returns responses. It acts as the middleman between the model and the view.
+
+**Route**: Defines the endpoints (URLs) of your application and maps them to specific controller functions.
+
+**Service**: Contains the business logic and operations that are often reused across different parts of the application. It sits between the controller and the model.
+
+**Utils**: Provides utility functions or helpers that perform common tasks across the application.inside this we have errorClasses , redis Functions , constants etc ..
+
+**Middleware**: This  functions will execute and pass to the next function , mainly used for validating Token , Error Handler and monitor-logs.
+
+**Socket**: Manages real-time communication, such as chat or notifications, using WebSockets.
+
+### root Files are :
+**server.js** : this will be the initial call  and inside this make a call **app.js** ,and create the server , End it creates the socket connection . 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
