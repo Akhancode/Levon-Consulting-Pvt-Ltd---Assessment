@@ -9,10 +9,11 @@ const settingsRoute = require("./settings.routes");
 const postRoute = require("./posts.routes");
 const externalApiRoute = require("./externalApi.route");
 
+router.use("/api",testRoute,productRoute,userRoute,);
+
 router.use("/api",profileRoute);
 router.use("/api",settingsRoute);
 router.use("/api",postRoute);
 router.use("/api",externalApiRoute);
-router.use("/api",testRoute,productRoute,userRoute,);
 
 module.exports = router;

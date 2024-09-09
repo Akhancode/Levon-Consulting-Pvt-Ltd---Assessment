@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../model/user.model");
+const socketIo = require("socket.io");
 const {
   CustomError,
   DatabaseError,
@@ -8,12 +9,14 @@ const {
 } = require("../utils/errors/error");
 const { default: mongoose } = require("mongoose");
 const Post = require("../model/post.model");
+const { io, server } = require("../../server");
 
 const SECRET_KEY = process.env.SECRET_KEY;
 exports.createPost = async (postData) => {
   try {
     const newPost = new Post(postData);
     await newPost.save();
+
     return newPost;
   } catch (error) {
     console.log(error);

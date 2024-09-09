@@ -4,7 +4,6 @@ const initializeRedisClient = require("../utils/redis/redis");
 const redisClient = require("../utils/redis/redis");
 const { getCacheFromRedis, setCacheData } = require("../utils/redis/redisHelper");
 
-//MANAGE Plan - Plan TABLE
 
 exports.fetchExternalApi = async (req, res, next) => {
   try {
