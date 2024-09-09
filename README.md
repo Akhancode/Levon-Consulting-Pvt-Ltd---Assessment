@@ -1,30 +1,22 @@
-# Project Name
+# Backend Task 
 
 Brief description of your project, including its purpose and main features.
 
-## Table of Contents
 
-- [Features](#features)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Scripts](#scripts)
-- [API Documentation](#api-documentation)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
+## Tasks
+- Task 1: Build a RESTful API
+- Task 2: Authentication and Authorization
+- Task 3: Data Fetching and Caching
+- Task 4: Database Integration
+- Task 5: Real-time Features
+- Task 6: Error Handling and Logging
 
-## Features
-
-- List the key features of the project.
-- Highlight anything unique or important.
 
 ## Prerequisites
 
-- **Node.js** (version X or higher)
-- **npm** or **yarn**
-- Any other software/tools required
+- **Node.js** (version v14.16.1 preferred .)
+- **npm**
+- Make run Redis server in **localhost:6379**
 
 ## Installation
 
