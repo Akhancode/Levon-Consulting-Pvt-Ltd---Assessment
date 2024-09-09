@@ -23,4 +23,21 @@ Brief description of your project, including its purpose and main features.
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/project-name.git
+   git clone https://github.com/Akhancode/Levon-Consulting-Pvt-Ltd---Assessment.git
+   
+2. Install all dependencies:
+
+   ```bash
+   cd Levon-Consulting-Pvt-Ltd---Assessment
+   npm install
+   
+3. Download and setup Redis Server in localhost:
+   
+   [Setting up Redis](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/install-redis-on-windows)
+
+4. visit Swagger API Documentation :
+   baseURL/api-docs
+   eg: http://localhost:9000/api-docs
+
+   ![swagger-api-doc](./assessment\swagger.png)
+
