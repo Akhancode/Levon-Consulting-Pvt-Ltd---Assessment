@@ -4,7 +4,14 @@ openapi: 3.0.0
 docExpansion: '`none`'
 info:
   title: Levon Consulting Pvt Ltd - Assessment
-  description: API for all routes related Tasks
+  description: 'API for all routes for related Tasks
+                  - Task 1: Build a RESTful API
+                  - Task 2: Authentication and Authorization
+                  - Task 3: Data Fetching and Caching
+                  - Task 4: Database Integration
+                  - Task 5: Real-time Features
+                  - Task 6: Error Handling and Logging
+                  '
   version: 1.0.0
 servers:
   - url: http://localhost:9000/api
