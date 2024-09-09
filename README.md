@@ -46,3 +46,7 @@ Brief description of your project, including its purpose and main features.
 
    ![postman-websocket-collection](./assessment/postman.png)
 
+    - For API - endpoints import these collection via URL
+       - https://api.postman.com/collections/30275964-357aa4eb-6581-4d3d-81f7-b9542adb21e1?access_key=PMAT-01J7BBPY185VRGB0RW8BVRVGGF
+
+
