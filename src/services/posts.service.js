@@ -9,7 +9,6 @@ const {
 } = require("../utils/errors/error");
 const { default: mongoose } = require("mongoose");
 const Post = require("../model/post.model");
-const { io, server } = require("../../server");
 
 const SECRET_KEY = process.env.SECRET_KEY;
 exports.createPost = async (postData) => {

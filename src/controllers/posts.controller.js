@@ -1,5 +1,4 @@
 
-const { io } = require("../../server");
 const postService = require("../services/posts.service");
 
 exports.createPost = async (req, res, next) => {

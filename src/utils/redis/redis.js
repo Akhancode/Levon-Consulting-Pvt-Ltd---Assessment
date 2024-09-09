@@ -1,14 +1,15 @@
 const { createClient } = require("redis");
 
 let redisClient;
-
+const PORT = process.env.REDIS_PORT || 6379
+const HOST = process.env.REDIS_HOST || "localhost"
 async function initializeRedisClient() {
   if (!redisClient) {
     // Configuration
     const config = {
       // url: process.env.REDIS_CONNECTION_STRING,
-      host: 'localhost',  // Use 'localhost' or the actual Redis server host
-      port: 6379, 
+      host: HOST,  // Use 'localhost' or the actual Redis server host
+      port: PORT, 
       socket: {
         reconnectStrategy: (retries) => {
           console.log(`Attempting to reconnect to Redis (${retries} retries)`);
