@@ -24,4 +24,23 @@ exports.getPostByIdWithUserDetails = async (req, res, next) => {
     next(err);
   }
 };
+exports.updateByIdWithUserDetails = async (req, res, next) => {
+  try {
+    const updatePost = req.body
+    const response = await postService.updatePostWithUserDetails(req.params.id,updatePost);
+    res.status(200).json(response);
+  } catch (err) {
+
+    next(err);
+  }
+};
+exports.deleteByIdWithUserDetails = async (req, res, next) => {
+  try {
+    const response = await postService.deletePostWithUserDetails(req.params.id);
+    res.status(200).json(response);
+  } catch (err) {
+
+    next(err);
+  }
+};
 

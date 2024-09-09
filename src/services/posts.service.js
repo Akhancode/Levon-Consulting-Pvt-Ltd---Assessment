@@ -27,3 +27,30 @@ exports.getPostWithUserDetails = async (postId) => {
     throw new DatabaseError("Error creating post.");
   }
 };
+exports.updatePostWithUserDetails = async (postId,updateData) => {
+  try {
+    const post = await Post.findByIdAndUpdate(postId,updateData,{new:true})
+    return post;
+  } catch (error) {
+    console.log(error)
+    throw new DatabaseError("Error update post.");
+  }
+};
+exports.deletePostWithUserDetails = async (postId) => {
+  try {
+    const post = await Post.findByIdAndDelete(postId)
+    if(!post){
+      throw new NotFoundError("No Post existing ")
+    }
+    return {
+      message:`post with id ${post?._id} deleted successfully !`
+    };
+  } catch (error) {
+    console.log(error)
+    if (error instanceof NotFoundError || error instanceof ValidationError || error instanceof CustomError) {
+      throw error; 
+    } else{
+      throw new DatabaseError("Error deleting post.");
+    }
+  }
+};
