@@ -22,7 +22,7 @@ exports.getUserByEmail = async (email) => {
 };
 exports.updateUserByEmail = async (email,updateData) => {
   try {
-    const userData = await User.findOneAndUpdate({email},updateData).select('-password');
+    const userData = await User.findOneAndUpdate({email},updateData,{new:true}).select('-password');
     return userData;
   } catch (error) {
     throw new DatabaseError("Error fetching users.");

@@ -98,5 +98,15 @@
     "inStock": true,
     "ratings": 4.3,
     "imageUrl": "https://example.com/images/wallet.jpg"
+  },
+  {
+    "id": 90,
+    "name": "Wireless Headphones",
+    "description": "High-quality wireless headphones with noise-cancellation.",
+    "price": 99.99,
+    "category": "Electronics",
+    "inStock": true,
+    "ratings": 4.5,
+    "imageUrl": "https://example.com/images/headphones.jpg"
   }
 ]

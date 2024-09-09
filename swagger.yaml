@@ -3,20 +3,11 @@
 openapi: 3.0.0
 docExpansion: '`none`'
 info:
-  title: PWIP-ANALYTICS-BE
-  description: API for all routes related to EXIM DATA
+  title: Levon Consulting Pvt Ltd - Assessment
+  description: API for all routes related Tasks
   version: 1.0.0
-  contact:
-    email: tech@pwip.co
-    url: "http://pwip.co"
 servers:
-  - url: http://localhost:8090/api
-  - url: http://localhost:8090/admin/api
-  - url: https://api-analytics-stage.pwip.co/api
-  - url: https://api-analytics-stage.pwip.co/admin/api
-  - url: https://api-analytics.pwip.co/api
-  - url: https://api-analytics.pwip.co/admin/api
-
+  - url: http://localhost:9000/api
     # description:       Optional server description, e.g. Internal staging server for testing
 components:
   securitySchemes:
@@ -27,32 +18,18 @@ components:
       securityDefinitions:
 paths:
  #PAYMENT
-  /service/rice-price/exim-trend:
+  /product/{id}:
     get:
       tags:
-        - USER-EXIM-ROUTES
-      summary: Get all exim Trend 
+        - Product
+      summary: Get Product 
       parameters:
-        - in: query
-          name: ToDate
+        - in: path
+          name: id
           type: string
           required: false
-          description: upto date for filteration 
-          example: 20-1-2024
-        - in: query
-          name: rangeInMonths
-          type: string
-          required: false
-          description: number of months of data required .
-          example: 6
-        - in: query
-          name: force
-          type: string
-          required: false
-          description: optional - Force update - (skip redis data and analysis from scrach then update redis) value [true,false] .
-          example: true
-      security: 
-         - BearerAuth: []  
+          description: product id  
+          example: 3
       responses:
         '200':    # status code
           description: A JSON array of content
@@ -61,132 +38,69 @@ paths:
               schema: 
                 type: array
                 example: 
-                    [
-                        {
-                            "_id": "65def73c769f43aeb45469c3",
-                            "_variantId": "65d4a307f1cc96c377a480d1",
-                            "userId": 10003,
-                            "saved": true,
-                            "createdAt": "2024-02-28T09:05:00.830Z",
-                            "updatedAt": "2024-02-28T09:08:29.577Z",
-                            "__v": 0,
-                        }
-                    ]
+                    {
+                          "id": 1,
+                          "name": "Wireless Headphones",
+                          "description": "High-quality wireless headphones with noise-cancellation.",
+                          "price": 99.99,
+                          "category": "Electronics",
+                          "inStock": true,
+                          "ratings": 4.5,
+                          "imageUrl": "https://example.com/images/headphones.jpg",
+                      }
                   
         '400':
           description: bad request    
-  
-  /service/rice-price/exim-table:
-    get:
+    delete:
       tags:
-        - USER-EXIM-ROUTES
-      summary: Get Data for  exim table 
+          - Product
+      summary: delete product  by Id .
       parameters:
-        - in: query
-          name: hsn_code
+        - in: path
+          name: id
           type: string
           required: true
-          description: hsn_code for filter product. 
-          example: 10063010
-        - in: query
-          name: valueType
+          description: ID of product to manage
+          example: 90
+      responses:
+        '200':    # status code
+          description: A JSON array - hash and user details
+          content:
+            application/json:
+              schema: 
+                type: object
+                example: {}
+        '400':
+          description: bad request 
+    patch:
+      tags:
+          - Product
+      parameters:
+        - in: path
+          name: id
           type: string
-          required: false
-          description: expected values will be ["ALL","FOB","VOLUME"] 
-          example: FOB
-        - in: query
-          name: portType
-          type: string
-          required: false
-          description: Only need when valueType !== "ALL". expected values will be ["POL","POD"] 
-          example: POD
-        - in: query
-          name: year 
-          type: string
-          required: false
-          description: Only need when valueType == "ALL". expected values will be [2023,2022,...] Default-[2023]
-          example: 2023         
-        - in: query
-          name: month 
-          type: string
-          required: false
-          description: Only need when month == "january". expected values will be ["january","february",...]
-          example: january         
-        - in: query
-          name: page
-          type: string
-          required: false
-          description: page number 
-          example: 1
-        - in: query
-          name: limit
-          type: string
-          required: false
-          description: number of data needed in a page
-          example: 10
-        - in: query
-          name: force
-          type: string
-          required: false
-          description: >
-            optional - Force update - (skip redis data and analysis from scrach then update redis) value [true,false] .
-            example: true 
-
-
-        # ONLY FOR VALUETYPE = ALL
-        - in: query
-          name: foreignCountry
-          type: string
-          required: false
-          description: >
-            optional Only when **valueType=all** values inputs [usa,nepal...] (case-insensitive)
-          example: nepal
-        - in: query
-          name: foreignPortName
-          type: string
-          required: false
-          description: optional Only when **valueType=all**  (case-insensitive)
-          example: nepal
-        - in: query
-          name: indianPort
-          type: string
-          required: false
-          description: optional Only when **valueType=all**  (case-insensitive)
-          example: BHITHAMORE
-        - in: query
-          name: exporter
-          type: string
-          required: false
-          description: optional Only when **valueType=all**  (case-insensitive)
-          example: BAJRANG BALI TRADERS
-        - in: query
-          name: IEC
-          type: string
-          required: false
-          description: optional Only when **valueType=all**  (case-insensitive)
-          example: 
-        - in: mode
-          name: exporter
-          type: string
-          required: false
-          description: optional Only when **valueType=all**  (case-insensitive) value to input ( sea
-              , air
-              , road
-              , icd)
-          enum:
-              - sea
-              - air
-              - road
-              - icd
-          example: road
-         
-       
-         
-
-         
+          required: true
+          description: ID of product to manage
+          example: 3
+      summary: edit product
+      requestBody:
+        description: A JSON object containing  information
+        content:
+          application/json:
+            schema:
+                type: object
+                example: 
+                         {
+                                  "id": 1,
+                                  "name": "Wireless Headphones",
+                                  "description": "High-quality wireless headphones with noise-cancellation.",
+                                  "price": 99.99,
+                                  "category": "Electronics",
+                                  "inStock": true,
+                                  "ratings": 4.5,
+                                  "imageUrl": "https://example.com/images/headphones.jpg",
+                              }
     
-      security: 
-         - BearerAuth: []  
       responses:
         '200':    # status code
           description: A JSON array of content
@@ -195,48 +109,70 @@ paths:
               schema: 
                 type: array
                 example: 
-                    [
-                        {
-                            "_id": "65def73c769f43aeb45469c3",
-                            "_variantId": "65d4a307f1cc96c377a480d1",
-                            "userId": 10003,
-                            "saved": true,
-                            "createdAt": "2024-02-28T09:05:00.830Z",
-                            "updatedAt": "2024-02-28T09:08:29.577Z",
-                            "__v": 0,
-                        }
-                    ]
+                    {
+                          "id": 1,
+                          "name": "Wireless Headphones",
+                          "description": "High-quality wireless headphones with noise-cancellation.",
+                          "price": 99.99,
+                          "category": "Electronics",
+                          "inStock": true,
+                          "ratings": 4.5,
+                          "imageUrl": "https://example.com/images/headphones.jpg",
+                      }
                   
         '400':
           description: bad request    
   
-  /service/rice-price/exim-table/filter-values:
-    get:
+  /product:
+    post:
       tags:
-        - USER-EXIM-ROUTES
-      summary: Get Filter values for  exim table [ valueType = all]
-      parameters:
-        - in: query
-          name: hsn_code
-          type: string
-          required: true
-          description: hsn_code for filter product. 
-          example: 10063010
-        - in: query
-          name: year 
-          type: string
-          required: false
-          description: Only need when valueType == "ALL". expected values will be [2023,2022,...] Default-[2023]
-          example: 2023         
-        - in: query
-          name: month 
-          type: string
-          required: false
-          description: Only need when month == "january". expected values will be ["january","february",...]
-          example: january         
+          - Product
+      summary: create product
+      requestBody:
+        description: A JSON object containing  information
+        content:
+          application/json:
+            schema:
+                type: object
+                example: 
+                         {
+                                  "id": 1,
+                                  "name": "Wireless Headphones",
+                                  "description": "High-quality wireless headphones with noise-cancellation.",
+                                  "price": 99.99,
+                                  "category": "Electronics",
+                                  "inStock": true,
+                                  "ratings": 4.5,
+                                  "imageUrl": "https://example.com/images/headphones.jpg",
+                              }
+      
+      responses:
+        '200':    # status code
+          description: A JSON array of content
+          content:
+            application/json:
+              schema: 
+                type: array
+                example: 
+                    {
+                          "id": 1,
+                          "name": "Wireless Headphones",
+                          "description": "High-quality wireless headphones with noise-cancellation.",
+                          "price": 99.99,
+                          "category": "Electronics",
+                          "inStock": true,
+                          "ratings": 4.5,
+                          "imageUrl": "https://example.com/images/headphones.jpg",
+                      }
+                  
+        '400':
+          description: bad request    
 
-      security: 
-         - BearerAuth: []  
+  /products:
+    get:
+      tags:
+        - Product
+      summary: Get All Products 
       responses:
         '200':    # status code
           description: A JSON array of content
@@ -245,61 +181,128 @@ paths:
               schema: 
                 type: array
                 example: 
-                    [
-                        {
-                            "_id": "65def73c769f43aeb45469c3",
-                            "_variantId": "65d4a307f1cc96c377a480d1",
-                            "userId": 10003,
-                            "saved": true,
-                            "createdAt": "2024-02-28T09:05:00.830Z",
-                            "updatedAt": "2024-02-28T09:08:29.577Z",
-                            "__v": 0,
-                        }
-                    ]
+                    [{
+                          "id": 1,
+                          "name": "Wireless Headphones",
+                          "description": "High-quality wireless headphones with noise-cancellation.",
+                          "price": 99.99,
+                          "category": "Electronics",
+                          "inStock": true,
+                          "ratings": 4.5,
+                          "imageUrl": "https://example.com/images/headphones.jpg",
+                      }]
                   
         '400':
           description: bad request    
-  
-  /service/rice-price/exim-analysis:
+   
+
+  /login:
+    post:
+      tags:
+          - Auth
+      summary: login user
+      requestBody:
+        description: A JSON object containing  information
+        content:
+          application/json:
+            schema:
+                type: object
+                example: 
+                         {
+                            "email": "ak",
+                              "password": "ak",
+                          }
+                        
+      responses:
+        '200':    # status code
+          description: A JSON array of content
+          content:
+            application/json:
+              schema: 
+                type: array
+                example: 
+                    {
+                          "id": 1,
+                          "name": "Wireless Headphones",
+                          "description": "High-quality wireless headphones with noise-cancellation.",
+                          "price": 99.99,
+                          "category": "Electronics",
+                          "inStock": true,
+                          "ratings": 4.5,
+                          "imageUrl": "https://example.com/images/headphones.jpg",
+                      }
+                  
+        '400':
+          description: bad request    
+  /register:
+    post:
+      tags:
+          - Auth
+      summary: register user
+      requestBody:
+        description: A JSON object containing  information
+        content:
+          application/json:
+            schema:
+                type: object
+                example: 
+                         {
+                            "email": "ak",
+                              "password": "ak",
+                          }
+                        
+      responses:
+        '200':    # status code
+          description: A JSON array of content
+          content:
+            application/json:
+              schema: 
+                type: array
+                example: 
+                    {
+                          "id": 1,
+                          "name": "Wireless Headphones",
+                          "description": "High-quality wireless headphones with noise-cancellation.",
+                          "price": 99.99,
+                          "category": "Electronics",
+                          "inStock": true,
+                          "ratings": 4.5,
+                          "imageUrl": "https://example.com/images/headphones.jpg",
+                      }
+                  
+        '400':
+          description: bad request    
+
+
+  /users:
     get:
       tags:
-        - USER-EXIM-ROUTES
-      summary: Get Data for  exim table 
-      parameters:
-        - in: query
-          name: hsn_code
-          type: string
-          required: true
-          description: hsn_code for filter product. 
-          example: 10063010
-        - in: query
-          name: force
-          type: string
-          required: false
-          description: optional - Force update - (skip redis data and analysis from scrach then update redis) value [true,false] .
-          example: true    
-        - in: query
-          name: lifetime
-          type: string
-          required: false
-          description: _ [default] optional - only check specific month data. 
-          example: true
-        - in: query
-          name: month
-          type: string
-          required: false
-          description: optional - only check specific month data. 
-          example: jan
-        - in: query
-          name: year
-          type: string
-          required: false
-          description: optional - only check specific month data. 
-          example: 2023
-         
-    
+        - User
+      summary: Get Users 
+      responses:
+        '200':    # status code
+          description: A JSON array of content
+          content:
+            application/json:
+              schema: 
+                type: array
+                example: 
+                  [ {
+                          "_id": "66de210f1e98df6411380bbc",
+                          "email": "x",
+                          "createdAt": "2024-09-08T22:11:27.056Z",
+                          "updatedAt": "2024-09-08T22:11:27.056Z",
+                          "__v": 0,
+                      }]
+        '400':
+          description: bad request    
+  /user:
+    get:
+      tags:
+        - User
+      summary: Get User 
       security: 
-         - BearerAuth: []  
+         - BearerAuth: []
       responses:
         '200':    # status code
           description: A JSON array of content
@@ -309,87 +312,28 @@ paths:
                 type: array
                 example: 
                    {
-                      "MostExportedDestinationName": {
-                          "destinationName": "Cotonou",
-                          "value": 326595.35,
-                      },
-                      "MostExportedOriginPortName": {
-                          "OriginPortName": "Kakinada",
-                          "value": 779146.96,
-                      },
-                      "MostExportedExporter": {
-                          "exporterName": "SATYAM BALAJEE RICE INDUSTRIES PRIVATE LIMITED",
-                          "value": 177290,
-                      },
-                      "MostExportedYear": {
-                          "year": "2024",
-                          "value": 1755013.72926,
-                      },
-                      "lifetimeTotalVol": 2806132.4735899945,
-                      "lifetimeTotalExportPriceValue": 159258754474.50397,
-                      "inflationPercentage": 57.99345622174325,
-                      "demandPercentage": 41.01167507479579,
-                    }
-                  
+                          "_id": "66de210f1e98df6411380bbc",
+                          "email": "x",
+                          "createdAt": "2024-09-08T22:11:27.056Z",
+                          "updatedAt": "2024-09-08T22:11:27.056Z",
+                          "__v": 0,
+                      }
         '400':
-          description: bad request    
-  
-  /service/rice-price/exim-data:
-    get:
-      deprecated: true
-      tags:
-        - ADMIN-EXIM-ROUTES
-      summary: .[ADMIN] [EXIM-DATA] get full eximData collection
-      parameters:
-            - in: query
-              name: page
-              type: string
-              required: false
-              description: upto date for filteration 
-              example: 1
-            - in: query
-              name: limit
-              type: string
-              required: false
-              description: number of months of data required .
-              example: 10
-            
-                    
-      security: 
-         - BearerAuth: []  
-      responses:
-        '200':    # status code
-          description: A JSON array of content
-          content:
-            application/json:
-              schema: 
-                type: object
-                example:  {}
-        '400':
-          description: bad request    
-   
-  /service/rice-price/exim-trend-update-redis:
+          description: bad request      
+  /user/{email}:
     get:
       tags:
-        - ADMIN-EXIM-ROUTES
-      summary: Update exim Trend to Redis. [this is force update - key in redis will be dynamic with ToDate and rangeFrom in query.]
-      parameters:
-        - in: query
-          name: ToDate
-          type: string
-          required: false
-          description: upto date for filteration 
-          example: 20-1-2024
-        - in: query
-          name: rangeInMonths
-          type: string
-          required: false
-          description: number of months of data required .
-          example: 6
-         
-    
+        - User
+      summary: Get User  by email
       security: 
-         - BearerAuth: []  
+         - BearerAuth: []
+      parameters:
+        - in: path
+          name: email
+          type: string
+          required: false
+          description: get user by email
+          example: 3
       responses:
         '200':    # status code
           description: A JSON array of content
@@ -398,65 +342,324 @@ paths:
               schema: 
                 type: array
                 example: 
-                    [
-                        {
-                            "_id": "65def73c769f43aeb45469c3",
-                            "_variantId": "65d4a307f1cc96c377a480d1",
-                            "userId": 10003,
-                            "saved": true,
-                            "createdAt": "2024-02-28T09:05:00.830Z",
-                            "updatedAt": "2024-02-28T09:08:29.577Z",
-                            "__v": 0,
-                        }
-                    ]
+                   {
+                          "_id": "66de210f1e98df6411380bbc",
+                          "email": "x",
+                          "createdAt": "2024-09-08T22:11:27.056Z",
+                          "updatedAt": "2024-09-08T22:11:27.056Z",
+                          "__v": 0,
+                      }
+        '400':
+          description: bad request    
+    delete:
+      tags:
+          - User
+      summary: delete User  by Id .
+      security: 
+         - BearerAuth: []
+      parameters:
+        - in: path
+          name: email
+          type: string
+          required: true
+          description: ID of User to manage
+          example: 90
+      responses:
+        '200':    # status code
+          description: A JSON array - hash and user details
+          content:
+            application/json:
+              schema: 
+                type: object
+                example: {}
+        '400':
+          description: bad request 
+    patch:
+      tags:
+          - User
+      parameters:
+        - in: path
+          name: email
+          type: string
+          required: true
+          description: ID of User to manage
+          example: 3
+      security: 
+         - BearerAuth: []
+      
+      summary: edit User
+      requestBody:
+        description: A JSON object containing  information
+        content:
+          application/json:
+            schema:
+                type: object
+                example: 
+                         {
+                                "email": "x",
+                            }
+    
+      responses:
+        '200':    # status code
+          description: A JSON array of content
+          content:
+            application/json:
+              schema: 
+                type: array
+                example: 
+                    {
+                          "id": 1,
+                          "name": "Wireless Headphones",
+                          "description": "High-quality wireless headphones with noise-cancellation.",
+                          "price": 99.99,
+                          "category": "Electronics",
+                          "inStock": true,
+                          "ratings": 4.5,
+                          "imageUrl": "https://example.com/images/headphones.jpg",
+                      }
                   
         '400':
           description: bad request    
- 
-  /service/rice-price/exim-data/bulk-write:
+  
+  /post:
     post:
       tags:
-        - SCRIPT-ADMIN-ROUTES
-      summary: .[ADMIN] [EXIM-DATA-UPLOAD] Add exim date to DB by excel sheet .
-      requestBody:
-        content:
-          application/octet-stream:
-            schema:
-              type: string
-              format: binary
-      
-                    
+          - Post
+      summary: create Post
       security: 
-         - BearerAuth: []  
+         - BearerAuth: []
+      
+      requestBody:
+        description: A JSON object containing  information
+        content:
+          application/json:
+            schema:
+                type: object
+                example: 
+                         {
+                            "title":"xyz-32",
+                            "content":"aaaa",
+                            }
+      
       responses:
         '200':    # status code
           description: A JSON array of content
           content:
             application/json:
               schema: 
-                type: object
-                example:  {}
+                type: array
+                example: 
+                 {
+                                "title": "xyz-32",
+                                "content": "aaaa",
+                                "userId": "66debaed9ad6e44f687d9b71",
+                                "_id": "66ded455f514a9296d1d4424",
+                                "createdAt": "2024-09-09T10:56:21.928Z",
+                                "updatedAt": "2024-09-09T10:56:21.928Z",
+                                "__v": 0,
+                            }
+                  
         '400':
           description: bad request    
- 
-  /service/rice-price/exim-data/sample-sheet:
+  /post/{id}:
     get:
       tags:
-        - SCRIPT-ADMIN-ROUTES
-      summary: .[ADMIN] [EXIM-DATA] get sample excel sheet for upload . ** upload data should be first sheet  [mandatory]
-
-                    
+        - Post
+      summary: Get Post 
       security: 
-         - BearerAuth: []  
+         - BearerAuth: []
+      
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: false
+          description: Post id  
+          example: 3
       responses:
         '200':    # status code
           description: A JSON array of content
           content:
             application/json:
               schema: 
-                type: object
-                example:  {}
+                type: array
+                example: 
+                    {
+                          "id": 1,
+                          "name": "Wireless Headphones",
+                          "description": "High-quality wireless headphones with noise-cancellation.",
+                          "price": 99.99,
+                          "category": "Electronics",
+                          "inStock": true,
+                          "ratings": 4.5,
+                          "imageUrl": "https://example.com/images/headphones.jpg",
+                      }
+                  
         '400':
           description: bad request    
- 
- 
+    delete:
+      tags:
+          - Post
+      summary: delete Post  by Id .
+      security: 
+         - BearerAuth: []
+      
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID of Post to manage
+          example: 90
+      responses:
+        '200':    # status code
+          description: A JSON array - hash and user details
+          content:
+            application/json:
+              schema: 
+                type: object
+                example: {}
+        '400':
+          description: bad request 
+    patch:
+      tags:
+          - Post
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID of Post to manage
+          example: 3
+      summary: edit Post
+      security: 
+         - BearerAuth: []
+      
+      requestBody:
+        description: A JSON object containing  information
+        content:
+          application/json:
+            schema:
+                type: object
+                example: 
+                         {
+                                  "id": 1,
+                                  "name": "Wireless Headphones",
+                                  "description": "High-quality wireless headphones with noise-cancellation.",
+                                  "price": 99.99,
+                                  "category": "Electronics",
+                                  "inStock": true,
+                                  "ratings": 4.5,
+                                  "imageUrl": "https://example.com/images/headphones.jpg",
+                              }
+    
+      responses:
+        '200':    # status code
+          description: A JSON array of content
+          content:
+            application/json:
+              schema: 
+                type: array
+                example: 
+                    {
+                          "id": 1,
+                          "name": "Wireless Headphones",
+                          "description": "High-quality wireless headphones with noise-cancellation.",
+                          "price": 99.99,
+                          "category": "Electronics",
+                          "inStock": true,
+                          "ratings": 4.5,
+                          "imageUrl": "https://example.com/images/headphones.jpg",
+                      }
+                  
+        '400':
+          description: bad request    
+  
+  /posts:
+    get:
+      tags:
+        - Post
+      summary: Get all Post 
+      security: 
+         - BearerAuth: []
+      responses:
+        '200':    # status code
+          description: A JSON array of content
+          content:
+            application/json:
+              schema: 
+                type: array
+                example: 
+                    [{
+                            "_id": "66ded455f514a9296d1d4424",
+                            "title": "xyz-000",
+                            "content": "aaaa",
+                            "userId": {
+                              "_id": "66debaed9ad6e44f687d9b71",
+                              "email": "ak",
+                            },
+                            "createdAt": "2024-09-09T10:56:21.928Z",
+                            "updatedAt": "2024-09-09T11:01:57.528Z",
+                            "__v": 0,
+                          }]
+                  
+        '400':
+          description: bad request    
+   
+  /profile:
+    get:
+      tags:
+        - Protected
+      summary: Get sample profile  
+      security: 
+         - BearerAuth: []
+      responses:
+        '200':    # status code
+          description: A JSON array of content
+          content:
+            application/json:
+              schema: 
+                type: array
+                example: 
+                    {}
+                  
+        '400':
+          description: bad request    
+  /settings:
+    get:
+      tags:
+        - Protected
+      summary: Get sample settings  
+      security: 
+         - BearerAuth: []
+      responses:
+        '200':    # status code
+          description: A JSON array of content
+          content:
+            application/json:
+              schema: 
+                type: array
+                example: 
+                    {}
+                  
+        '400':
+          description: bad request    
+   
+  /weather:
+    get:
+      tags:
+        - External API - caching (redis)
+      summary: Get sample settings  
+      responses:
+        '200':    # status code
+          description: A JSON array of content
+          content:
+            application/json:
+              schema: 
+                type: array
+                example: 
+                    {}
+                  
+        '400':
+          description: bad request    
+   

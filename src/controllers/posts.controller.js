@@ -10,7 +10,6 @@ exports.createPost = async (req, res, next) => {
       userId: req.user.userId,
     };
     const response = await postService.createPost(body);
-    io.emit('newMessage', { message:"response" });
     res.status(200).json(response);
   } catch (err) {
 
