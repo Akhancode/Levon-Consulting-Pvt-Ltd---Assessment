@@ -8,6 +8,8 @@ const publicRoutes = require("./src/routes/index.js");
 const swaggerui = require("swagger-ui-express");
 const YAML = require("yamljs");
 const bodyParser = require("body-parser");
+const initializeRedisClient = require("./src/utils/redis/redis.js");
+
 
 const PORT = process.env.PORT;
 
@@ -60,7 +62,7 @@ app.use((err, req, res, next) => {
 
 (async () => {
   try {
-    // await initializeRedisClient();
+     await initializeRedisClient();
     app.listen(PORT, () => {
       console.log(`Server started at PORT: ${PORT}`);
     });
