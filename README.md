@@ -41,3 +41,8 @@ Brief description of your project, including its purpose and main features.
 
    ![swagger-api-doc](./assessment/swagger.png)
 
+4. POSTMAN collection :
+   - For websocket please do like screenshot 
+
+   ![postman-websocket-collection](./assessment/postman.png)
+
