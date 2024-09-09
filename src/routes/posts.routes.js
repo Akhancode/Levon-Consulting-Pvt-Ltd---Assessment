@@ -10,6 +10,9 @@ const router = express.Router();
 router.post("/post",validateTokenMiddleware, async (req, res, next) => {
     postController.createPost(req,res,next)
 });
+router.get("/posts",validateTokenMiddleware, async (req, res, next) => {
+    postController.getAllPosts(req,res,next)
+});
 router.get("/post/:id",validateTokenMiddleware, async (req, res, next) => {
     postController.getPostByIdWithUserDetails(req,res,next)
 });

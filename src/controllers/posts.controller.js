@@ -14,6 +14,16 @@ exports.createPost = async (req, res, next) => {
     next(err);
   }
 };
+exports.getAllPosts = async (req, res, next) => {
+  try {
+ 
+    const response = await postService.getAllPosts();
+    res.status(200).json(response);
+  } catch (err) {
+
+    next(err);
+  }
+};
 exports.getPostByIdWithUserDetails = async (req, res, next) => {
   try {
  
