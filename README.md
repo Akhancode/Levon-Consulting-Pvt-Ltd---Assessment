@@ -39,5 +39,5 @@ Brief description of your project, including its purpose and main features.
    baseURL/api-docs
    eg: http://localhost:9000/api-docs
 
-   ![swagger-api-doc](./assessment\swagger.png)
+   ![swagger-api-doc](./assessment/swagger.png)
 
