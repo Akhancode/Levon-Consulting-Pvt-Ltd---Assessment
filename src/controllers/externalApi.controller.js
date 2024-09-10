@@ -16,6 +16,9 @@ exports.fetchExternalApi = async (req, res, next) => {
       await setCacheData(cacheKey,response)
       console.log('\x1b[34m%s\x1b[0m', "updated cache .");
       
+    }else{
+      console.log('\x1b[34m%s\x1b[0m', "getting weather data from cache .");
+
     }
     res.status(200).json(response);
   } catch (err) {
