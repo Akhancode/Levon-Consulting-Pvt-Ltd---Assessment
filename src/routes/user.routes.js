@@ -14,6 +14,9 @@ router.post("/login", async (req, res, next) => {
 //CRUD - users
 
 router.get("/users", async (req, res, next) => {
+    console.log(
+        "update users route . pm2 check"
+    )
     userController.getAllUsers(req,res,next)
 });
 router.get("/user",validateTokenMiddleware, async (req, res, next) => {
