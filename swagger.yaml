@@ -4,14 +4,20 @@ openapi: 3.0.0
 docExpansion: '`none`'
 info:
   title: Levon Consulting Pvt Ltd - Assessment
-  description: 'API for all routes for related Tasks
+  description: | 
+                API for all routes for related Tasks
                   - Task 1: Build a RESTful API
                   - Task 2: Authentication and Authorization
                   - Task 3: Data Fetching and Caching
                   - Task 4: Database Integration
                   - Task 5: Real-time Features
                   - Task 6: Error Handling and Logging
-                  '
+
+                  ** You can get Auth Token from login response or use test-token -** 
+                   ```json
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFrIiwidXNlcklkIjoiNjZkZWJhZWQ5YWQ2ZTQ0ZjY4N2Q5YjcxIiwiaWF0IjoxNzI1OTU4NzU4LCJleHAiOjE3MzQ1OTg3NTh9.vB468Qyr8byTPjbN4GZpsXMVAscKkq7KHFztghbR2vc
+                      
+                  
   version: 1.0.0
 servers:
   - url: http://13.60.216.166/api
