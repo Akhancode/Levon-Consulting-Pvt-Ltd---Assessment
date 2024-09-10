@@ -1,7 +1,7 @@
 # Backend Task 
 
 Brief description of your project, including its purpose and main features.
-
+host at (base_url) -  http://13.60.216.166/
 
 ## Tasks
 - Task 1: Build a RESTful API
@@ -10,6 +10,21 @@ Brief description of your project, including its purpose and main features.
 - Task 4: Database Integration
 - Task 5: Real-time Features
 - Task 6: Error Handling and Logging
+
+
+## Deployment details 
+1. **Hosted in AWS EC2 Instance**: The application is deployed on an EC2 instance, which is a virtual server in Amazon's cloud environment . both redis and express server running in ec2 instance - its a free tier so might have slow loading.
+
+2. **Using PM2 Process Management**: PM2 is a process manager for Node.js applications. 
+
+3. **CI/CD Pipeline via GitHub Actions**: Continuous Integration and Continuous Deployment (CI/CD) is set up using GitHub Actions. It automates the process of  deploying code changes. When new code is pushed to **main** branch of the GitHub repository , GitHub Actions triggers a workflow that automatically deploys it to the EC2 instance.
+
+4.**Deployed Redis in the Same Instance**: Redis, an in-memory data structure store used as a database or cache, is installed on the same EC2 instance as the application. Redis helps in improving the performance by caching frequently accessed data , currently used in **GET /api/weather**
+
+5.**Used Nginx for Proxy**: Nginx is used as a reverse proxy server. It routes client requests to the appropriate backend service (express app running under PM2)
+
+## Deployed Swagger Documentation
+Goto - [Swagger-doc hosted ](http://13.60.216.166/api-docs)
 
 
 ## Prerequisites
